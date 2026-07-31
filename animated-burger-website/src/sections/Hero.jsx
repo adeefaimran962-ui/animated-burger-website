@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
-import hero from "../assets/hero.png";
-
+import BurgerAnimation from "../components/BurgerAnimation";
 
 function Hero() {
+  const scrollToMenu = () => {
+    document.getElementById("menu").scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section className="hero" id="home">
       <div className="hero-content">
@@ -10,6 +13,7 @@ function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="hero-subtitle"
         >
           THE BEST BURGER EXPERIENCE
         </motion.p>
@@ -36,30 +40,37 @@ function Hero() {
           className="hero-btn"
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
+          onClick={scrollToMenu}
         >
           Explore Menu 🍔
         </motion.button>
       </div>
 
-     <motion.div
-  className="burger-container"
-  initial={{ opacity: 0, scale: 0.7 }}
-  animate={{
-    opacity: 1,
-    scale: 1,
-    y: [0, -15, 0],
-  }}
-  transition={{
-    duration: 1,
-    y:{
-      duration:3,
-      repeat:Infinity,
-      ease:"easeInOut"
-    }
-  }}
->
-  <img src={hero} alt="Burger" />
-</motion.div>
+      <div className="burger-container">
+        <BurgerAnimation />
+      </div>
+
+      <motion.div
+        className="scroll-indicator"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        onClick={scrollToMenu}
+        style={{ cursor: "pointer" }}
+      >
+        <motion.div
+          className="scroll-mouse"
+          animate={{ y: [0, 10, 0] }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <div className="scroll-wheel"></div>
+        </motion.div>
+        <p>Scroll Down</p>
+      </motion.div>
     </section>
   );
 }
